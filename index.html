@@ -31,9 +31,9 @@
         #page4 { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('dodo.jpg') no-repeat center center; background-size: cover; overflow-y: auto; text-align: right; display: none; }
 
         .btn { 
-            padding: 20px 45px; border: none; border-radius: 50px; font-size: 1.4rem; 
-            font-weight: bold; cursor: pointer; margin: 15px; min-width: 160px;
-            display: inline-block; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+            padding: 15px 30px; border: none; border-radius: 50px; font-size: 1.2rem; 
+            font-weight: bold; cursor: pointer; margin: 10px; min-width: 120px;
+            display: inline-block; touch-action: manipulation;
         }
         .btn-yes { background: #25D366; color: white; }
         .btn-no { background: #444; color: white; transition: 0.2s; }
@@ -43,12 +43,7 @@
         .glass-box { background: rgba(0,0,0,0.75); border: 1px solid #25D366; padding: 20px; border-radius: 20px; margin: 10px; margin-bottom: 100px; }
         
         #timer { margin: 15px 0; font-size: 1.1rem; font-weight: bold; text-align: center; width: 100%; color: #25D366; text-shadow: 0 0 5px #000; }
-        
-        /* زرار الطوارئ لو الصوت معصلج */
-        #force-play {
-            display: none; background: #ff4757; color: white; padding: 12px;
-            border-radius: 10px; margin-bottom: 15px; cursor: pointer; font-weight: bold;
-        }
+        #force-play { display: none; background: #ff4757; color: white; padding: 12px; border-radius: 10px; margin-bottom: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -64,9 +59,11 @@
     </div>
 
     <div id="page1" class="page">
-        <h1 style="margin-bottom:40px; font-size: 2rem;">بتحبيني يا رودي؟ 🥺</h1>
-        <button class="btn btn-yes" onclick="navTo(2)">أيوة طبعاً 😍</button>
-        <button class="btn btn-no" id="no-btn" onclick="waTalk()">لأ 🙄</button>
+        <h1 style="margin-bottom:30px;">بتحبيني يا رودي؟ 🥺</h1>
+        <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+            <button class="btn btn-yes" onclick="navTo(2)">أيوة طبعاً 😍</button>
+            <button class="btn btn-no" id="no-btn" onclick="waTalk()">لأ 🙄</button>
+        </div>
     </div>
 
     <div id="page2" class="page">
@@ -104,18 +101,18 @@
                 notify.classList.add('show');
                 setTimeout(() => notify.classList.remove('show'), 2500);
                 clicks++;
-                b.style.transform = `scale(${1 - (clicks * 0.2)})`;
-            } else {
-                b.style.display = 'none';
-                msgT.innerText = "خلاص قولي نعم يا بنوتي ❤️";
-                notify.classList.add('show');
+                // تصغير الزرار تدريجياً
+                let newScale = 1 - (clicks * 0.2);
+                if (newScale < 0.2) newScale = 0;
+                b.style.transform = `scale(${newScale})`;
+                if(newScale === 0) b.style.display = 'none';
             }
         }
 
         function navTo(num) {
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             const next = document.getElementById('page' + num);
-            if(num === 4) { next.style.display = 'block'; } else { next.style.display = 'flex'; }
+            next.style.display = (num === 4) ? 'block' : 'flex';
         }
 
         function startAudio() {
@@ -130,21 +127,35 @@
                 navTo(4);
                 const m = document.getElementById('music');
                 m.currentTime = 36;
-                
-                let playPromise = m.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(() => {
-                        // لو المتصفح منع التشغيل التلقائي بنظهر زرار المساعدة
+                let p = m.play();
+                if (p !== undefined) {
+                    p.catch(() => {
                         document.getElementById('force-play').style.display = 'inline-block';
-                        // وبنحاول نشغل أول ما تلمس أي مكان
                         document.addEventListener('click', startAudio, {once: true});
-                        document.addEventListener('touchstart', startAudio, {once: true});
                     });
                 }
-                
                 startCounting(); startTyping();
             } else { alert('التاريخ غلط يا هانم! 😜'); }
         }
 
         function startTyping() {
-            const text = `بحبك ومحبتش غيرك ولا هعرف احب غيرك عشان انتي نور عيني انتي دنيتي انا اصلا عارفه عارف يا بنوتي انتي هديتي اللي انا فرحان بيها وهفضل فرحان بيها طول عمري مقدرش علي بعدك ولا اقدر علي غيابك ولا اقدر اعيش من غيرك وحياتي اللي انا عايش فيها انتي كل حكايتي الحلوه انتي سعادتي وفرحي عمري في يوم ما اقدر أفرط فيكي وعمري في يوم اهتمامي يقل ولو قصرت في حقك تقوليلي بس ده بيبقي غصب من عني والله ينور عيني بس مقدرش اقصر معاكي ابداا انتي النبض انتي الحياه انتي القمر ال بسهر معاه انا كل كلمه بقولها لك حلوه بتبقي طالعه من قلبي والله انتي العشق والحياه بموت فيكي ينور عيني وعمري ما افكر في يوم من الايام ابص لغيرك انتي ماليا عنيا بس انتي الدنيا كلها مش بحبك انا بعشقك وبموت فيكي انتي نور حياتي واحلي حاجه في دنيتي كلها انا ببقي فرحان قولي لما يبقي تعبان وتقوليلي تعالا في حضني مع اننا مش مع بعض بس بحس بالأمان معاكي وبعشقك بحبك اوي وبعشق غيرتك عليا وخوفك عليا وحنيتك عليا ولو حاجه مزعلاني مش انتي السبب بتهوني عليا وبعشق كلامك وطفولتك معايا ن وكل ثانيه حبي ليكي ليزيد كتير اوي اوي انا لو في حاجه اثبت بيها حبي ليكي كنت عملتها من قبل ما افكر بحبك يا احلي هديه حصلت في حياتي خدي البوسه دي اموووواه بعشقك يا بنوتي انتي بنتي واختي وصاحبتي وحياتي وكل الليا ربنا يخليكي ليا يا نور عنيا وما يحرمنيش منك ابدا انتي عارفه في كل الوقت وفي كل ثانيه معاكي بتوحشيني وانا معاكي بحبك بحبك حب الدنيا دي في قل
+            const text = `بحبك ومحبتش غيرك ولا هعرف احب غيرك... (هنا النص بتاعك بالكامل)`;
+            let i = 0; const target = document.getElementById('type-text');
+            function t() { if(i < text.length) { target.innerHTML += text.charAt(i); i++; setTimeout(t, 45); const p4 = document.getElementById('page4'); p4.scrollTop = p4.scrollHeight; } }
+            t();
+        }
+
+        function startCounting() {
+            const start = new Date("2025-10-23T00:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime() - start;
+                const d = Math.floor(now/(1000*60*60*24));
+                const h = Math.floor((now%(1000*60*60*24))/(1000*60*60));
+                const m = Math.floor((now%(1000*60*60))/(1000*60));
+                const s = Math.floor((now%(1000*60))/1000);
+                document.getElementById('timer').innerHTML = `💍 بقالنا سوا: ${d} يوم و ${h} ساعة و ${m} دقيقة و ${s} ثانية`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
