@@ -8,30 +8,69 @@
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         body { background: #000; color: #fff; text-align: center; overflow: hidden; height: 100vh; width: 100vw; }
+
+        /* نوتيفيكيشن واتساب عبدالرحمن */
+        #wa-notify {
+            position: fixed; top: -150px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 380px; background: #ffffff; color: #000;
+            padding: 12px; border-radius: 15px; display: flex; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 9999;
+            transition: 0.5s ease-in-out; text-align: right; pointer-events: none;
+        }
+        #wa-notify.show { top: 20px; }
+        .wa-img { width: 45px; height: 45px; background: #25D366; border-radius: 50%; margin-left: 12px; display: flex; justify-content: center; align-items: center; }
+        .wa-content { flex: 1; }
+        .wa-name { font-weight: bold; color: #075E54; font-size: 1rem; display: block; }
+        .wa-msg { font-size: 0.9rem; color: #333; }
+
+        /* تنسيق الصفحات */
         .page { display: none; width: 100%; height: 100%; flex-direction: column; justify-content: center; align-items: center; padding: 20px; position: absolute; top: 0; left: 0; }
         #page1 { display: flex; background: #000; }
         #page2 { background: #000 url('awili.jpg') no-repeat center center; background-size: contain; justify-content: flex-end; padding-bottom: 80px; }
         #page3 { background: #075E54; }
         #page4 { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('dodo.jpg') no-repeat center center; background-size: cover; overflow-y: auto; text-align: right; display: none; }
-        .btn { padding: 20px 45px; border: none; border-radius: 50px; font-size: 1.4rem; font-weight: bold; cursor: pointer; margin: 15px; }
+
+        .btn { 
+            padding: 20px 45px; border: none; border-radius: 50px; font-size: 1.4rem; 
+            font-weight: bold; cursor: pointer; margin: 15px; min-width: 160px;
+            display: inline-block; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+        }
         .btn-yes { background: #25D366; color: white; }
+        .btn-no { background: #444; color: white; transition: 0.2s; }
+        .btn-blue { background: #007bff; color: white; }
+
         input { padding: 18px; border-radius: 12px; border: none; width: 280px; margin-bottom: 20px; font-size: 1.2rem; text-align: center; color: #000; }
         .glass-box { background: rgba(0,0,0,0.75); border: 1px solid #25D366; padding: 20px; border-radius: 20px; margin: 10px; margin-bottom: 100px; }
-        #timer { margin: 15px 0; font-size: 1.1rem; font-weight: bold; text-align: center; color: #25D366; }
-        /* زرار طوارئ لو الصوت مشتغلش */
-        #play-fallback { display: none; background: #ff4757; color: white; padding: 10px; border-radius: 10px; margin-bottom: 10px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        
+        #timer { margin: 15px 0; font-size: 1.1rem; font-weight: bold; text-align: center; width: 100%; color: #25D366; text-shadow: 0 0 5px #000; }
+        
+        /* زرار الطوارئ لو الصوت معصلج */
+        #force-play {
+            display: none; background: #ff4757; color: white; padding: 12px;
+            border-radius: 10px; margin-bottom: 15px; cursor: pointer; font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
+    <div id="wa-notify">
+        <div class="wa-img">
+            <svg width="25" height="25" viewBox="0 0 24 24" fill="white"><path d="M12.031 6.172c-2.203 0-4.004 1.812-4.004 4.015 0 .86.281 1.656.75 2.312l-.766 2.813 2.891-.75c.625.344 1.328.547 2.078.547 2.203 0 4.004-1.812 4.004-4.015 0-2.219-1.812-4.022-4.053-4.022zM12.031 15c-.656 0-1.281-.156-1.828-.438l-.172-.094-1.297.344.344-1.266-.109-.172c-.313-.531-.484-1.141-.484-1.781 0-1.875 1.516-3.391 3.422-3.391 1.891 0 3.438 1.547 3.438 3.422.016 1.891-1.484 3.438-3.391 3.438z"/></svg>
+        </div>
+        <div class="wa-content">
+            <span class="wa-name">عبدالرحمن</span>
+            <span id="wa-msg-text" class="wa-msg">دوستي "لأ" بالغلط صح؟ 🤔</span>
+        </div>
+    </div>
+
     <div id="page1" class="page">
-        <h1 style="margin-bottom:40px;">بتحبيني يا رودي؟ 🥺</h1>
+        <h1 style="margin-bottom:40px; font-size: 2rem;">بتحبيني يا رودي؟ 🥺</h1>
         <button class="btn btn-yes" onclick="navTo(2)">أيوة طبعاً 😍</button>
+        <button class="btn btn-no" id="no-btn" onclick="waTalk()">لأ 🙄</button>
     </div>
 
     <div id="page2" class="page">
-        <button class="btn" style="background:#007bff; color:white;" onclick="navTo(3)">اضغطي ي مزتي 😍💕</button>
+        <button class="btn btn-blue" onclick="navTo(3)">اضغطي ي مزتي 😍💕</button>
     </div>
 
     <div id="page3" class="page">
@@ -41,28 +80,48 @@
     </div>
 
     <div id="page4" class="page">
-        <div id="play-fallback" onclick="forcePlay()">دوسي هنا لو مفيش صوت 🎵</div>
-        <h1 style="color:#25D366; text-align: center;">مراتي اللي بعشقها 😍</h1>
+        <div id="force-play" onclick="startAudio()">دوسي هنا لو مفيش صوت 🎵</div>
+        <h1 style="color:#25D366; text-align: center; width:100%; margin-top: 20px;">مراتي اللي بعشقها 😍</h1>
         <div id="timer"></div>
-        <div class="glass-box"><p id="type-text" style="line-height:1.8; font-size: 1.1rem;"></p></div>
-        
+        <div class="glass-box">
+            <p id="type-text" style="line-height:1.8; font-size: 1.1rem; color: #fff;"></p>
+        </div>
         <audio id="music" loop preload="auto">
             <source src="amr.mp3" type="audio/mpeg">
-            <source src="amr.MP3" type="audio/mpeg">
         </audio>
     </div>
 
     <script>
+        let clicks = 0;
+        const funnyMsgs = ["دوستي \"لأ\" بالغلط صح؟ 🤔", "صبعك عِلق ولا إيه؟ 😂", "طب فكري تاني 😜", "الزرار هيختفي.. قولي نعم بقى 🙄"];
+
+        function waTalk() {
+            const notify = document.getElementById('wa-notify');
+            const msgT = document.getElementById('wa-msg-text');
+            const b = document.getElementById('no-btn');
+            if(clicks < funnyMsgs.length) {
+                msgT.innerText = funnyMsgs[clicks];
+                notify.classList.add('show');
+                setTimeout(() => notify.classList.remove('show'), 2500);
+                clicks++;
+                b.style.transform = `scale(${1 - (clicks * 0.2)})`;
+            } else {
+                b.style.display = 'none';
+                msgT.innerText = "خلاص قولي نعم يا بنوتي ❤️";
+                notify.classList.add('show');
+            }
+        }
+
         function navTo(num) {
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             const next = document.getElementById('page' + num);
             if(num === 4) { next.style.display = 'block'; } else { next.style.display = 'flex'; }
         }
 
-        function forcePlay() {
+        function startAudio() {
             const m = document.getElementById('music');
             m.play();
-            document.getElementById('play-fallback').style.display = 'none';
+            document.getElementById('force-play').style.display = 'none';
         }
 
         function finalCheck() {
@@ -75,34 +134,17 @@
                 let playPromise = m.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(() => {
-                        // لو المتصفح رفض، بنظهر زرار الطوارئ
-                        document.getElementById('play-fallback').style.display = 'block';
-                        // وبنحاول نشغل الصوت مع أول لمسة للشاشة
-                        document.addEventListener('click', () => { m.play(); }, {once: true});
+                        // لو المتصفح منع التشغيل التلقائي بنظهر زرار المساعدة
+                        document.getElementById('force-play').style.display = 'inline-block';
+                        // وبنحاول نشغل أول ما تلمس أي مكان
+                        document.addEventListener('click', startAudio, {once: true});
+                        document.addEventListener('touchstart', startAudio, {once: true});
                     });
                 }
+                
                 startCounting(); startTyping();
-            } else { alert('التاريخ غلط! 😜'); }
+            } else { alert('التاريخ غلط يا هانم! 😜'); }
         }
 
         function startTyping() {
-            const text = `بحبك ومحبتش غيرك ولا هعرف احب غيرك عشان انتي نور عيني انتي دنيتي انا اصلا عارفه عارف يا بنوتي انتي هديتي اللي انا فرحان بيها وهفضل فرحان بيها طول عمري مقدرش علي بعدك ولا اقدر علي غيابك ولا اقدر اعيش من غيرك وحياتي اللي انا عايش فيها انتي كل حكايتي الحلوه انتي سعادتي وفرحي عمري في يوم ما اقدر أفرط فيكي وعمري في يوم اهتمامي يقل ولو قصرت في حقك تقوليلي بس ده بيبقي غصب من عني والله ينور عيني بس مقدرش اقصر معاكي ابداا انتي النبض انتي الحياه انتي القمر ال بسهر معاه انا كل كلمه بقولها لك حلوه بتبقي طالعه من قلبي والله انتي العشق والحياه بموت فيكي ينور عيني وعمري ما افكر في يوم من الايام ابص لغيرك انتي ماليا عنيا بس انتي الدنيا كلها مش بحبك انا بعشقك وبموت فيكي انتي نور حياتي واحلي حاجه في دنيتي كلها انا ببقي فرحان قولي لما يبقي تعبان وتقوليلي تعالا في حضني مع اننا مش مع بعض بس بحس بالأمان معاكي وبعشقك بحبك اوي وبعشق غيرتك عليا وخوفك عليا وحنيتك عليا ولو حاجه مزعلاني مش انتي السبب بتهوني عليا وبعشق كلامك وطفولتك معايا ن وكل ثانيه حبي ليكي ليزيد كتير اوي اوي انا لو في حاجه اثبت بيها حبي ليكي كنت عملتها من قبل ما افكر بحبك يا احلي هديه حصلت في حياتي خدي البوسه دي اموووواه بعشقك يا بنوتي انتي بنتي واختي وصاحبتي وحياتي وكل الليا ربنا يخليكي ليا يا نور عنيا وما يحرمنيش منك ابدا انتي عارفه في كل الوقت وفي كل ثانيه معاكي بتوحشيني وانا معاكي بحبك بحبك حب الدنيا دي في قلبي ليك فيهاا انا بس عايز اقولك اني مش بحبك انا بعشقك ولو في كلمه اكبر من بعشقك كنت قلتلهالك ولو في كلام يوصف حبي ليكي أو يوصف حتي ربع حبي ليكي انا بحبك لدرجه اني مستعد اعمل اي حاجه واخسر اي حاجه عشان نفضل مع بعض وافضل اعمل ال مستسحيل عشان نبقي مع بعض لو الدنيا كلها قالت مستحيل افضل احاول عشان بجد انتي ليا انا وبس وانا عارف ان في النهايه حبي هو ال هيفوز علي الدنيا وال فيها وعارف أن ربنا حاسس بيا و هيستجيب لدعواتي ل ربنا شايف اكيد انا بحبك ازاي وانتي بالنسبه لي ايه انا اصلا حياتي بقيت حلوه بسببك انتي وجودك خلاني ارجع واحب الحياه وحبيت حياتي عشان انتي وكل يوم يدعي ربنا يحفظك لي ويحميكي ويبعد عنك اي حاجه وحشه ويجعلك من نصيبي كل صلاه بظعي أننا نبقي لبعض اي حد ممكن يقول اني زهقت من علاقتنا أو مليت عمري مليت منك ابدا يا حبيبتي والله دول مش يومين عشتهم معاكي حلوين وخلاص افضل انا افضل احبك لاخر يوم في عمري انا جمبك لاخر نفس في عمري انا افضل اتعلم الحب معاكي عرفت الحب لما حبيتك حبيتك حب ما فيش واحد يعرف يحبه لحد ما فيش كلام في الدنيا يقدر يوصف انا حبيتك قد اي وتقدري تقولي انا ما صدقت لقيت النص التاني ساعات بحس اني ابنك وبباباكي وانتي بنوتي وحبيبتي وروح قلبي ولو اتكلم عمري كلو مش هديكي حقك من ال انتي بتعمليه معايا مفيش مش احن منك في الدنيا عشان كدا دي الحاجه ال خلتني احبك ومتعلق بيكي برتاح لما اجي افضفلك من حاجات مضيقاني جيتي خديني من وسط عالم غريب كنت تايه فيه كنت كاره حياتي باللي فيهاانتي حياتي غيرتي كل دا وانتي غيرتيني انا شخصيا بس محظوظ عشان انتي دخلتي حياتي انا ربنا عطاني هديه وعوضني بيها عن الدنيا بحالها وخلتيني من كتر منا بحبك حبيت الدنيا ومستعد اعمل اي حاجه عشان نكون مع بعض ولبعد عايزك تكوني عارفه اني بحبك وبحب هزارك وبحب ضحكتك وبموت فيكي اقسم بالله تفكيري انتي حياتي انتي نجمه وقعت من السما ودخلت جوه قلبي وانتي عمري بحب اقضي وقتي معاكي انتي وخده كل وقتي وكل حاجه بحبك وعمري مهحب حد بعدك ولا هحب قدك انتي جنتي ال حلوه ال بهرب من العالم كله معانا وعشان ابقي معاكي وبس ربنا يخليكي ليا وميحرمنيش منك ابدا يروح قلبيي عارفه اني سعات بزعلك بس والله غصب عني مش عايزك تزعلي مني ابدا يتمناه دايما من ربنا انك تكوني ليا الثانية ال بتغيبي فينا عني بيبقا اليوم ملهوش لازمة من غيرك انتي ال بتحبي وقتي لما اكون تعبان مش بلاقي حد غيرك اتكلم معااا كل نبضة فقلبي بحبك ينبض قلبي بتنبض باسمك انتي وبس بحبك يا احلا بنوتة وبحبك يا قلب بابا.`;
-            let i = 0; const target = document.getElementById('type-text');
-            function t() { if(i < text.length) { target.innerHTML += text.charAt(i); i++; setTimeout(t, 45); const p4 = document.getElementById('page4'); p4.scrollTop = p4.scrollHeight; } }
-            t();
-        }
-
-        function startCounting() {
-            const start = new Date("2025-10-23T00:00:00").getTime();
-            setInterval(() => {
-                const now = new Date().getTime() - start;
-                const d = Math.floor(now/(1000*60*60*24));
-                const h = Math.floor((now%(1000*60*60*24))/(1000*60*60));
-                const m = Math.floor((now%(1000*60*60))/(1000*60));
-                const s = Math.floor((now%(1000*60))/1000);
-                document.getElementById('timer').innerHTML = `💍 بقالنا سوا: ${d} يوم و ${h} ساعة و ${m} دقيقة و ${s} ثانية`;
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
+            const text = `بحبك ومحبتش غيرك ولا هعرف احب غيرك عشان انتي نور عيني انتي دنيتي انا اصلا عارفه عارف يا بنوتي انتي هديتي اللي انا فرحان بيها وهفضل فرحان بيها طول عمري مقدرش علي بعدك ولا اقدر علي غيابك ولا اقدر اعيش من غيرك وحياتي اللي انا عايش فيها انتي كل حكايتي الحلوه انتي سعادتي وفرحي عمري في يوم ما اقدر أفرط فيكي وعمري في يوم اهتمامي يقل ولو قصرت في حقك تقوليلي بس ده بيبقي غصب من عني والله ينور عيني بس مقدرش اقصر معاكي ابداا انتي النبض انتي الحياه انتي القمر ال بسهر معاه انا كل كلمه بقولها لك حلوه بتبقي طالعه من قلبي والله انتي العشق والحياه بموت فيكي ينور عيني وعمري ما افكر في يوم من الايام ابص لغيرك انتي ماليا عنيا بس انتي الدنيا كلها مش بحبك انا بعشقك وبموت فيكي انتي نور حياتي واحلي حاجه في دنيتي كلها انا ببقي فرحان قولي لما يبقي تعبان وتقوليلي تعالا في حضني مع اننا مش مع بعض بس بحس بالأمان معاكي وبعشقك بحبك اوي وبعشق غيرتك عليا وخوفك عليا وحنيتك عليا ولو حاجه مزعلاني مش انتي السبب بتهوني عليا وبعشق كلامك وطفولتك معايا ن وكل ثانيه حبي ليكي ليزيد كتير اوي اوي انا لو في حاجه اثبت بيها حبي ليكي كنت عملتها من قبل ما افكر بحبك يا احلي هديه حصلت في حياتي خدي البوسه دي اموووواه بعشقك يا بنوتي انتي بنتي واختي وصاحبتي وحياتي وكل الليا ربنا يخليكي ليا يا نور عنيا وما يحرمنيش منك ابدا انتي عارفه في كل الوقت وفي كل ثانيه معاكي بتوحشيني وانا معاكي بحبك بحبك حب الدنيا دي في قل
