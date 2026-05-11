@@ -17,6 +17,7 @@
         .btn-yes { background: #25D366; color: white; }
         input { padding: 18px; border-radius: 12px; border: none; width: 280px; margin-bottom: 20px; font-size: 1.2rem; text-align: center; color: #000; }
         .glass-box { background: rgba(0,0,0,0.75); border: 1px solid #25D366; padding: 20px; border-radius: 20px; margin: 10px; margin-bottom: 100px; }
+        #timer { margin: 15px 0; font-size: 1.1rem; font-weight: bold; text-align: center; width: 100%; color: #25D366; text-shadow: 0 0 5px #000; }
     </style>
 </head>
 <body>
@@ -39,6 +40,7 @@
 
     <div id="page4" class="page">
         <h1 style="color:#25D366; text-align: center; width:100%; margin-top: 20px;">مراتي اللي بعشقها 😍</h1>
+        <div id="timer"></div>
         <div class="glass-box">
             <p id="type-text" style="line-height:1.8; font-size: 1.1rem; color: #fff;"></p>
         </div>
@@ -63,8 +65,21 @@
                 m.play().catch(() => {
                     document.addEventListener('click', () => { m.play(); }, {once: true});
                 });
+                startCounting();
                 startTyping();
-            } else { alert('التاريخ غلط! 😜'); }
+            } else { alert('التاريخ غلط يا هانم! 😜'); }
+        }
+
+        function startCounting() {
+            const start = new Date("2025-10-23T00:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime() - start;
+                const d = Math.floor(now/(1000*60*60*24));
+                const h = Math.floor((now%(1000*60*60*24))/(1000*60*60));
+                const m = Math.floor((now%(1000*60*60))/(1000*60));
+                const s = Math.floor((now%(1000*60))/1000);
+                document.getElementById('timer').innerHTML = `💍 بقالنا سوا: ${d} يوم و ${h} ساعة و ${m} دقيقة و ${s} ثانية`;
+            }, 1000);
         }
 
         function startTyping() {
@@ -84,3 +99,4 @@
     </script>
 </body>
 </html>
+
